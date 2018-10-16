@@ -2,13 +2,18 @@ package com.newdicooker.tempetek.mvpfin.mvp_network.base;
 
 import android.content.Context;
 import android.os.Bundle;
+import android.support.annotation.LayoutRes;
 import android.support.v7.app.AppCompatActivity;
+import android.widget.Toast;
 
+import com.android.tu.loadingdialog.LoadingDailog;
 import com.newdicooker.tempetek.mvpfin.mvp_network.base.mvp.BaseModel;
 import com.newdicooker.tempetek.mvpfin.mvp_network.base.mvp.BasePresenter;
 import com.newdicooker.tempetek.mvpfin.mvp_network.base.mvp.BaseView;
 import com.newdicooker.tempetek.mvpfin.mvp_network.promptdialog.PromptDialog;
 import com.newdicooker.tempetek.mvpfin.mvp_network.utils.StatusBarUtil;
+
+import butterknife.ButterKnife;
 
 import static com.newdicooker.tempetek.mvpfin.mvp_network.base.mvp.BaseObserver.NETWORK_ERROR;
 
@@ -27,6 +32,7 @@ public abstract class BaseActivity<P extends BasePresenter> extends AppCompatAct
     protected abstract P createPresenter();
     //错误提示框  警告框  成功提示框 加载进度框 （只是提供个案例 可自定义）
     private PromptDialog promptDialog;
+    protected LoadingDailog loadingDailog;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -34,10 +40,18 @@ public abstract class BaseActivity<P extends BasePresenter> extends AppCompatAct
         setContentView(getLayoutId());
         mPresenter = createPresenter();
         setStatusBar();
-
         this.initToolbar(savedInstanceState);
         this.initData();
+
     }
+
+
+    @Override
+    public void setContentView(@LayoutRes int layoutResID) {
+        super.setContentView(layoutResID);
+        ButterKnife.bind(this);
+    }
+
     /**
      * 获取布局ID
      *
@@ -66,6 +80,7 @@ public abstract class BaseActivity<P extends BasePresenter> extends AppCompatAct
      * @param str
      */
     public void showToast(String str) {
+        Toast.makeText(mContext, str, Toast.LENGTH_SHORT).show();
     }
 
     public void showLongToast(String str) {
@@ -88,29 +103,20 @@ public abstract class BaseActivity<P extends BasePresenter> extends AppCompatAct
     //显示加载进度框回调
     @Override
     public void showLoading() {
-        showLoadingDialog();
+        setLoading();
+        loadingDailog.show();
     }
     //隐藏进度框回调
     @Override
     public void hideLoading() {
-        closeLoadingDialog();
+        loadingDailog.dismiss();
     }
-    /**
-     * 进度款消失
-     */
-    public void closeLoadingDialog() {
-        if (promptDialog != null) {
-            promptDialog.dismiss();
-        }
-    }
-    /**
-     * 加载中...
-     */
-    public void showLoadingDialog() {
-        if (promptDialog == null) {
-            promptDialog = new PromptDialog(this);
-        }
-        promptDialog.showLoading("加载中...",false);
+
+    protected void setLoading() {
+      LoadingDailog.Builder builder = new LoadingDailog.Builder(this)
+                .setMessage("加载中")
+                .setCancelable(true);
+        loadingDailog = builder.create();
     }
     @Override
     protected void onDestroy() {

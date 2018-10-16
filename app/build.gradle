@@ -18,28 +18,36 @@ android {
         }
     }
 }
-
+allprojects {
+    repositories {
+        jcenter()
+        maven { url "https://jitpack.io" }
+    }
+}
 dependencies {
     compile fileTree(dir: 'libs', include: ['*.jar'])
     androidTestCompile('com.android.support.test.espresso:espresso-core:2.2.2', {
         exclude group: 'com.android.support', module: 'support-annotations'
     })
-    compile 'com.android.support:appcompat-v7:26.+'
-    compile 'com.android.support.constraint:constraint-layout:1.0.2'
-    testCompile 'junit:junit:4.12'
     //网络请求
-    compile 'com.squareup.okhttp3:okhttp:3.9.1'
-    compile 'com.squareup.retrofit2:retrofit:2.3.0'
     //ConverterFactory的Gson依赖包
-    compile 'com.squareup.retrofit2:converter-gson:2.3.0'
-//    //CallAdapterFactory的Rx依赖包
-   compile 'com.squareup.retrofit2:adapter-rxjava2:2.3.0'
-
-    compile 'io.reactivex.rxjava2:rxandroid:2.0.2'
+    //    //CallAdapterFactory的Rx依赖包
+   
 
     //日志
    // compile 'com.orhanobut:logger:2.2.0'
 //
 //    //水波纹 与此项目没有关系
+    compile 'com.android.support:appcompat-v7:26.+'
+    compile 'com.android.support.constraint:constraint-layout:1.0.2'
+    compile 'com.squareup.okhttp3:okhttp:3.9.1'
+    compile 'com.squareup.retrofit2:retrofit:2.3.0'
+    compile 'com.squareup.retrofit2:converter-gson:2.3.0'
+    compile 'com.squareup.retrofit2:adapter-rxjava2:2.3.0'
+    compile 'io.reactivex.rxjava2:rxandroid:2.0.2'
     compile 'com.scwang.wave:MultiWaveHeader:1.0.0-alpha-1'
+    testCompile 'junit:junit:4.12'
+    compile 'com.jakewharton:butterknife:8.8.1'
+    annotationProcessor 'com.jakewharton:butterknife-compiler:8.8.1'
+    compile 'com.github.gittjy:LoadingDialog:1.0.2'
 }

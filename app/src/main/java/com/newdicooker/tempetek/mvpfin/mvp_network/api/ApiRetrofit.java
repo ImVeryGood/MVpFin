@@ -12,6 +12,7 @@ import com.newdicooker.tempetek.mvpfin.mvp_network.base.cookie.CookieManger;
 import com.newdicooker.tempetek.mvpfin.mvp_network.base.gson.DoubleDefault0Adapter;
 import com.newdicooker.tempetek.mvpfin.mvp_network.base.gson.IntegerDefault0Adapter;
 import com.newdicooker.tempetek.mvpfin.mvp_network.base.gson.LongDefault0Adapter;
+import com.orhanobut.logger.Logger;
 
 import java.io.IOException;
 import java.util.concurrent.TimeUnit;
@@ -115,12 +116,12 @@ public class ApiRetrofit {
             long duration = endTime - startTime;
             MediaType mediaType = response.body().contentType();
             String content = response.body().string();
-//
-//            Logger.wtf(TAG, "----------Request Start----------------");
-//            Logger.e(TAG, "| " + request.toString() + "===========" + request.headers().toString());
-//            Logger.json(content);
-//            Logger.e(content);
-//            Logger.wtf(TAG, "----------Request End:" + duration + "毫秒----------");
+
+            Logger.wtf(TAG, "----------Request Start----------------");
+            Logger.e(TAG, "| " + request.toString() + "===========" + request.headers().toString());
+            Logger.json(content);
+            Logger.e(content);
+            Logger.wtf(TAG, "----------Request End:" + duration + "毫秒----------");
             Log.d(TAG, "| " + request.toString() + "===========" + request.headers().toString());
             return response.newBuilder()
                     .body(ResponseBody.create(mediaType, content))

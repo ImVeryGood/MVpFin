@@ -3,23 +3,22 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical"
     tools:context="com.newdicooker.tempetek.mvpfin.mvp_network.movie.MoviesActivity">
 
-    <Button
-        android:id="@+id/btn"
+    <android.support.design.widget.TabLayout
+        android:id="@+id/tab_layout"
         android:layout_width="match_parent"
-        android:layout_height="80dp"
-        android:text="获取数据" />
+        android:layout_height="50dp"
+        app:tabGravity="fill"
+        app:tabTextColor="#000"
+        app:tabSelectedTextColor="@color/colorAccent"
+        android:background="@color/colorPrimaryDark" />
 
-    <Button
-        android:id="@+id/btn_no"
-        android:layout_width="match_parent"
-        android:layout_height="80dp"
-        android:text="预留按钮" />
-
-    <TextView
-        android:id="@+id/list_view"
+    <android.support.v4.view.ViewPager
+        android:id="@+id/view_pager"
         android:layout_width="match_parent"
         android:layout_height="match_parent" />
+
 </LinearLayout>
